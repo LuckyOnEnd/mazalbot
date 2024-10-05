@@ -37,8 +37,8 @@ async def extract_diamonds_from_message_with_ai(message: str) -> Optional[list[E
     logger.info("Extracting the diamonds from the AI model response")
     try:
         raw_diamonds_list = json.loads(messages.data[0].content[0].text.value).get("diamonds")
-    except json.JSONDecodeError:
-        logger.error("Error while decoding the JSON response. This must never happen!")
+    except json.JSONDecodeError as ex:
+        logger.error(f"Error while decoding the JSON response. This must never happen! {ex.args}")
         return None
     logger.success("Successfully extracted the raw diamonds list from the AI model response: {}", raw_diamonds_list)
     if raw_diamonds_list is None:
